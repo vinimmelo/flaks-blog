@@ -1,6 +1,13 @@
 from .. import db
 
 
+tags = db.Table(
+    'post_tags',
+    db.Column('post_id', db.Integer, db.ForeignKey('post.id')),
+    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'))
+)
+
+
 class User(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     username = db.Column(db.String(255))
@@ -42,7 +49,7 @@ class Comment(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(255))
     text = db.Column(db.Text())
-    date = db.Column(db.DateTime(), default=datetime.datetime.now)
+    date = db.Column(db.DateTime())
     post_id = db.Column(db.Integer(), db.ForeignKey('post.id'))
 
     def __repr__(self):
